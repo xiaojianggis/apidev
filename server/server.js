@@ -28,7 +28,7 @@ app
     try {
       // const results = await db.query("SELECT * FROM restaurants");
       const results = await db.query(
-        "select * books"
+        "select * from books"
       );
       res.status(200).json({
         status: "success",
@@ -39,7 +39,6 @@ app
       console.log(error);
     }
   });
-
 
 app
   .route("/api/v1/restaurants")

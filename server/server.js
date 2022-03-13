@@ -12,9 +12,6 @@ app.use(express.json());
 app.use(cors());
 
 
-app.get('/users', db.getUsers)
-
-
 const getUsers = (request, response) => {
   pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
 //   pool.query('SELECT * FROM philadata3652 ORDER BY gvi ASC LIMIT 3', (error, results) => {
@@ -42,22 +39,22 @@ app
       console.log(error);
     }
   })
-  .route("/api/users")
-  .get(async (req, res, next) => {
-    try {
-      // const results = await db.query("SELECT * FROM restaurants");
-      const results = await db.query(
-        "select * books"
-      );
-      res.status(200).json({
-        status: "success",
-        results: results.rows.length,
-        data: results.rows,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  })
+  // .route("/api/users")
+  // .get(async (req, res, next) => {
+  //   try {
+  //     // const results = await db.query("SELECT * FROM restaurants");
+  //     const results = await db.query(
+  //       "select * books"
+  //     );
+  //     res.status(200).json({
+  //       status: "success",
+  //       results: results.rows.length,
+  //       data: results.rows,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // })
   .post(async (req, res, next) => {
     const { name, location, price_range } = req.body;
     try {

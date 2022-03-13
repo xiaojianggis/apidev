@@ -11,6 +11,20 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 
+
+app.get('/users', db.getUsers)
+
+
+const getUsers = (request, response) => {
+  pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+//   pool.query('SELECT * FROM philadata3652 ORDER BY gvi ASC LIMIT 3', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 app
   .route("/api/v1/restaurants")
   .get(async (req, res, next) => {
@@ -18,6 +32,22 @@ app
       // const results = await db.query("SELECT * FROM restaurants");
       const results = await db.query(
         "select * from restaurants LEFT JOIN (SELECT restaurant_id, count(*), trunc(AVG(rating)) AS average_rating FROM reviews GROUP BY restaurant_id) reviews on restaurants.id = reviews.restaurant_id"
+      );
+      res.status(200).json({
+        status: "success",
+        results: results.rows.length,
+        data: results.rows,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  })
+  .route("/api/users")
+  .get(async (req, res, next) => {
+    try {
+      // const results = await db.query("SELECT * FROM restaurants");
+      const results = await db.query(
+        "select * books"
       );
       res.status(200).json({
         status: "success",

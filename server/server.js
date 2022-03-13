@@ -23,12 +23,12 @@ const getUsers = (request, response) => {
 }
 
 app
-  .route("/api/v1/restaurants")
+  .route("/api/users")
   .get(async (req, res, next) => {
     try {
       // const results = await db.query("SELECT * FROM restaurants");
       const results = await db.query(
-        "select * from restaurants LEFT JOIN (SELECT restaurant_id, count(*), trunc(AVG(rating)) AS average_rating FROM reviews GROUP BY restaurant_id) reviews on restaurants.id = reviews.restaurant_id"
+        "select * books"
       );
       res.status(200).json({
         status: "success",
@@ -38,13 +38,16 @@ app
     } catch (error) {
       console.log(error);
     }
-  })
-  .route("/api/users")
+  });
+
+
+app
+  .route("/api/v1/restaurants")
   .get(async (req, res, next) => {
     try {
       // const results = await db.query("SELECT * FROM restaurants");
       const results = await db.query(
-        "select * books"
+        "select * from restaurants LEFT JOIN (SELECT restaurant_id, count(*), trunc(AVG(rating)) AS average_rating FROM reviews GROUP BY restaurant_id) reviews on restaurants.id = reviews.restaurant_id"
       );
       res.status(200).json({
         status: "success",
